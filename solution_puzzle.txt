@@ -1,0 +1,31 @@
+def pyramid_descent_puzzle(pyramid, target):
+
+    dynamic = [[None] * len(i) for i in pyramid]
+
+    def dfs(r, c, curr):
+
+        if r == len(pyramid) - 1:
+
+            return '' if pyramid[r][c] == curr else None
+
+
+        if dynamic[r][c] is not None:
+            return dynamic[r][c]
+
+
+        left = dfs(r + 1, c, curr // pyramid[r][c])
+        right = dfs(r + 1, c + 1, curr // pyramid[r][c])
+
+
+        if left is not None:
+            dynamic[r][c] = 'L' + left
+            return dynamic[r][c]
+        elif right is not None:
+            dynamic[r][c] = 'R' + right
+            return dynamic[r][c]
+        else:
+
+            return None
+
+
+    return dfs(0, 0, target)
